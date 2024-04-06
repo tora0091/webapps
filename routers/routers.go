@@ -4,12 +4,17 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/tora0091/webapps/environments"
 )
 
-type Routers struct{}
+type Routers struct {
+	Env *environments.Env
+}
 
-func NewRouters() *Routers {
-	return &Routers{}
+func NewRouters(env *environments.Env) *Routers {
+	return &Routers{
+		Env: env,
+	}
 }
 
 func (r *Routers) RouterUp() {
@@ -27,7 +32,7 @@ func (r *Routers) RouterUp() {
 	}
 
 	router.GET("/health", health)
-	router.Run("localhost:8000")
+	router.Run(r.Env.HostName() + ":" + r.Env.Port())
 }
 
 func health(c *gin.Context) {
