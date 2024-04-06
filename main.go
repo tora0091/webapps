@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/joho/godotenv"
+
+	"github.com/tora0091/webapps/databases"
 	"github.com/tora0091/webapps/environments"
 	"github.com/tora0091/webapps/routers"
 )
@@ -15,5 +17,10 @@ func init() {
 
 func main() {
 	env := environments.NewEnv()
-	routers.NewRouters(env).RouterUp()
+	db, err := databases.NewDatabases(env).GetConnection()
+	if err != nil {
+		panic("Error db connection error.")
+	}
+
+	routers.NewRouters(env, db).RouterUp()
 }
