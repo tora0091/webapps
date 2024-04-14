@@ -29,9 +29,9 @@ func (r *Routers) RouterUp() {
 	m := router.Group("/movie")
 	{
 		movieHandler := handlers.NewMovieHandler(r.Env, r.Db)
-		m.GET("/list", movieHandler.GetList)
-		m.GET("/movie/list/:target")
-		m.GET("/movie/detail/:movie_id", movieHandler.GetDetail)
+		m.GET("/target", movieHandler.GetTarget)
+		m.GET("/list/:target", movieHandler.GetMovieList)
+		m.GET("/detail/:movie_id", movieHandler.GetMovieDetail)
 	}
 
 	// face system
