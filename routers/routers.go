@@ -37,7 +37,9 @@ func (r *Routers) RouterUp() {
 	// face system
 	f := router.Group("/face")
 	{
-		f.GET("/list/:face_id")
+		faceHandler := handlers.NewFaceHandler(r.Env, r.Db)
+		f.GET("/list/:movie_id", faceHandler.GetFaceList)
+		f.GET("/alike/:face_id", faceHandler.GetLookLikeFaceList)
 	}
 
 	router.GET("/health", health)
